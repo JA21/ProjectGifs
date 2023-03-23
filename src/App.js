@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+
+import { Route } from "wouter";
+
 import './App.css';
+import { SearchResult } from "./pages/SearchResults";
+
+import { Detail } from "./pages/Detail";
+import { GifsContextProvider } from './context/GifsContext'
+import React, { Suspense } from "react";
+
+const HomePage = React.lazy(() => import('./pages/Home/index.js'))
+
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Suspense fallback={null}>
+        <section>
+          <GifsContextProvider>
+            <Route
+              component={HomePage}
+              path="/"
+            />
+            <Route
+              component={SearchResult}
+              path="/search/:keyword"
+            />
+            <Route
+              component={Detail}
+              path="/gif/:id"
+            />
+          </GifsContextProvider>
+        </section>
+      </Suspense>
     </div>
   );
 }
