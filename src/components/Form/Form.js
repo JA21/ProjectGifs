@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { useLocation } from 'wouter';
-import { ButtonAnt } from "../ButtonAnt/ButtonAnt";
+
+import { Button } from 'antd';
 
 import './form.css'
 
@@ -10,6 +11,7 @@ const Form = () => {
     const [location, setLocation] = useLocation();
     const HandleSubmit = evet => {
         evet.preventDefault();
+        console.log(evet)
         //navegacion
         setLocation(`/search/${keyword}`)
 
@@ -20,7 +22,7 @@ const Form = () => {
     return (
         <form onSubmit={HandleSubmit}>
             <input onChange={HandleInput} type='text' placeholder='Search gifs' />
-            <ButtonAnt className='btnHomeSend' Type='submit' Name='Enviar' />
+            <Button className='btnHomeSend' htmlType='submit'  >Enviar </Button>
         </form>
     )
 }

@@ -11,7 +11,7 @@ const Gifs = ({ id, url, title }) => {
     return (
         <div className="containerGifs">
             <Link to={`/gif/${id}`} className='linkGifs' >
-                <h3 className='h3Gifs'> {title} </h3>
+                <h3 className='h3Gifs'> {title?title:'null'} </h3>
                 <img loading="lazy" src={url} alt={title} onClick={sendIdDetail} />
             </Link>
         </div>

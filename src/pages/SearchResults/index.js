@@ -1,21 +1,28 @@
 import { useCallback, useRef, useEffect } from 'react';
+import debounce from 'just-debounce-it';
+import { Helmet } from 'react-helmet';
 import UseGifs from 'hooks/useGifs.js';
 import Spinner from 'components/Spinner/Spinner.js';
 import ListOfGifs from 'components/ListOfGifs/ListOfGifs.js';
+import UseNearScreen from 'hooks/UseNearScreen';
 
 import './index.css'
-import UseNearScreen from 'hooks/UseNearScreen';
-import debounce from 'just-debounce-it';
+/* import useSeo from 'hooks/useSeo'; */
 export const SearchResult = (props) => {
     const { keyword } = props.params
     const { gifs, loading, setPage } = UseGifs({ keyword });
     const externalRef = useRef();
     const { show } = UseNearScreen({ externalRef: loading ? null : externalRef, one: false });
-    const debounceHandleNextPage = useCallback(debounce(() =>
-    setPage(prevPage => prevPage + 1), 1000), [])
+
+    const titlePage = gifs ? `${gifs.length} results of ${keyword}` : 'null';
+
+    /* useSeo({title:titlePage}) */
+
+    const debounceHandleNextPage = useCallback(debounce(
+        () => setPage(prevPage => prevPage + 1), 1000
+    ), [setPage])
 
     useEffect(() => {
-        
         if (show) debounceHandleNextPage();
     }, [debounceHandleNextPage, show])
 
@@ -23,9 +30,20 @@ export const SearchResult = (props) => {
         <div>
             {
                 loading ?
-                    <Spinner />
+                    <>
+                        <Helmet>
+                            <time>Cargando ...</time>
+                        </Helmet>
+                        <Spinner />
+                    </>
                     :
-                    <ListOfGifs gifs={gifs} />
+                    <>
+                        <Helmet>
+                            <time>{titlePage}</time>
+                            <meta name="description" content={gifs?gifs:'null'} />
+                        </Helmet>
+                        <ListOfGifs gifs={gifs} />
+                    </>
             }
             <div id='visor' ref={externalRef}></div>
         </div>

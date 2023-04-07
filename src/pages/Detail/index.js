@@ -1,14 +1,33 @@
-
+import { Redirect } from 'wouter';
 import Gifs from 'components/Gifs/Gifs';
-import GlobalGifs from 'hooks/GlobalGifs';
+import Spinner from 'components/Spinner/Spinner';
+import useSingleGifs from 'hooks/useSingleGifs';
+/* import useSeo from 'hooks/useSeo' */
+import { Helmet } from 'react-helmet';
+
 export const Detail = (props) => {
     const { id } = props.params;
-    const gifs = GlobalGifs();
+    const { gif, isLoading, isError } = useSingleGifs({ id })
 
-    const gif = gifs.find(g => g.id === id)
+    /* useSeo({title:gif?gif.title:'',description:`Detail of ${gif?gif.title:''}`}) */
+    if (isLoading) return (<>
+        <Helmet>
+            <title>Cargando ...</title>
+        </Helmet>
+        <Spinner />
+    </>)
+
+    if (isError) return <Redirect to='/404' />
+
+    if (!gif) return null
 
     return (
+        <>
+        <Helmet>
+        <title>{gif?`${gif.title} || Gifi`:''}</title>
+        </Helmet>
         <Gifs
             {...gif} />
+        </>
     )
 }

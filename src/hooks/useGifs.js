@@ -25,7 +25,7 @@ const UseGifs = ({ keyword } = { keyword: null }) => {
     }, [keyword, setGifs, keywordToUse])
 
     useEffect(() => {
-        if (page == InitialPage) return
+        if (page === InitialPage) return
 
         setloadingNextPage(true)
 

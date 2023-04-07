@@ -3,7 +3,7 @@ import './styleListOfGifs.css'
 const ListOfGifs = ({gifs}) => {
 
      const MapGIfs=
-    gifs.map(singleGifs =>
+    gifs?.map(singleGifs =>
         <Gifs
             key={singleGifs.id}
             id={singleGifs.id}
