@@ -1,7 +1,7 @@
 
-
+import './index.css'
 const Spinner =()=>{
-    return <h1>Spinner........</h1>
+    return <div className="lds-hourglass"></div>
 }
 
 export default Spinner;

@@ -7,10 +7,14 @@ import ListOfGifs from 'components/ListOfGifs/ListOfGifs.js';
 import UseNearScreen from 'hooks/UseNearScreen';
 
 import './index.css'
+import Form from 'components/Form/Form';
 /* import useSeo from 'hooks/useSeo'; */
+
+
+
 export const SearchResult = (props) => {
-    const { keyword } = props.params
-    const { gifs, loading, setPage } = UseGifs({ keyword });
+    const { keyword, rating = 'g' } = props.params
+    const { gifs, loading, setPage } = UseGifs({ keyword, rating });
     const externalRef = useRef();
     const { show } = UseNearScreen({ externalRef: loading ? null : externalRef, one: false });
 
@@ -40,8 +44,11 @@ export const SearchResult = (props) => {
                     <>
                         <Helmet>
                             <time>{titlePage}</time>
-                            <meta name="description" content={gifs?gifs:'null'} />
+                            <meta name="description" content={gifs ? gifs : 'null'} />
                         </Helmet>
+
+                        <Form initialKeyword={keyword} initialRating={rating} />
+
                         <ListOfGifs gifs={gifs} />
                     </>
             }

@@ -5,22 +5,21 @@ import Trending from 'components/TrendingSearches/index';
 import Footer from 'components/Fotter/Footer';
 import './home.css'
 import Form from 'components/Form/Form';
+import Spinner from "components/Spinner/Spinner";
 
 const Home = () => {
     const { gifs, loading } = UseGifs()
     return (
         <>
-        <Helmet>
-            <title>Home Gifi</title>
-        </Helmet>
+            <Helmet>
+                <title>Home Gifi</title>
+            </Helmet>
             {
                 loading ?
-                    <h1>cargando</h1>
+                    <Spinner/>
                     :
                     <div>
-                        <div className='containerFormHome'>
-                            <Form />
-                        </div>
+                        <Form />
                         <h3 className='h3HomeLastSearch'>The last search</h3>
                         <ListOfGifs gifs={gifs} />
                         <h3 className='h3Home'>The most popular gifs</h3>
